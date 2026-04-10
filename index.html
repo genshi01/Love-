@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Helloo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Great+Vibes&display=swap" rel="stylesheet">
-    
+    <title>BẤM VÔ BẤT NGỜ</title>
     <style>
         /* ===== CẤU HÌNH GIAO DIỆN CHÍNH ===== */
         :root {
-            --primary-color: #ff3366; 
+            --primary-color: #ff3366; /* Màu đỏ hồng chính */
             --glow-color: rgba(255, 51, 102, 0.7);
-            --bg-color: #0d010c;
-            /* Màu Vàng Gold Luxury */
-            --gold-gradient: linear-gradient(to bottom, #cfb53b 0%, #f7ef8a 50%, #ae8625 100%);
-            --gold-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            --bg-color: #0d010c; /* Nền đen huyền bí */
         }
 
         body, html {
@@ -30,6 +25,7 @@
             align-items: center;
         }
 
+        /* ===== NỀN BONG BÓNG TRÁI TIM BAY ===== */
         #bubble-background {
             position: absolute;
             top: 0;
@@ -40,7 +36,7 @@
             z-index: 1;
         }
 
-        /* ===== QUIZ BOX ===== */
+        /* ===== PHẦN KHU VỰC CÂU HỎI (HỘP QUIZ) ===== */
         #quiz-part {
             position: relative;
             z-index: 100;
@@ -80,6 +76,7 @@
             font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--glow-color);
         }
 
         .btn:hover {
@@ -88,63 +85,72 @@
             transform: scale(1.05);
         }
 
-        /* ===== RESULT AREA (GOLD LUXURY) ===== */
+        /* ===== PHẦN HIỆU ỨNG TỎ TÌNH ĐẸP HƠN ===== */
         #result-part {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: none;
+            display: none; /* Chỉ hiện khi xong quiz */
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 50;
         }
 
+        /* Vẽ hình trái tim SVG rõ ràng và đẹp hơn */
         #heart-svg {
-            width: 180px;
-            fill: #d4af37; /* Màu vàng đồng cho trái tim */
-            margin-bottom: 30px;
-            animation: pulse-glow-gold 1.5s ease-in-out infinite;
+            width: 250px;
+            height: auto;
+            fill: var(--primary-color);
+            margin-bottom: 40px;
+            /* Animation đập pulse kết hợp phát sáng */
+            animation: pulse-glow 1.5s ease-in-out infinite;
         }
 
+        /* Phần Typing Area được làm đẹp hơn */
         #typing-area {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4rem; /* Tăng kích thước cho sang trọng */
+            font-family: 'Great Vibes', cursive; /* Bạn có thể thêm link font này nếu muốn, ở đây dùng font mặc định đẹp nhất */
+            font-size: 2.2rem;
             font-weight: bold;
+            color: #fff;
             text-align: center;
-            /* Tạo hiệu ứng chữ vàng kim loại */
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
-            text-shadow: var(--gold-shadow);
+            min-height: 1.6em;
+            width: 80%;
+            max-width: 700px;
+            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px #fff;
         }
 
+        /* Con trỏ typing mượt mà hơn */
         .cursor {
             display: inline-block;
-            width: 3px;
-            height: 50px;
-            background-color: #f7ef8a;
-            margin-left: 5px;
-            box-shadow: 0 0 10px #f7ef8a;
+            width: 4px;
+            height: 40px;
+            background-color: #fff;
+            margin-left: 8px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #fff;
             animation: blink-cursor 0.7s infinite;
             vertical-align: middle;
         }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes pulse-glow-gold {
-            0% { transform: scale(1); filter: drop-shadow(0 0 5px #ae8625); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #f7ef8a); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 5px #ae8625); }
+        /* ===== CÁC ĐỊNH NGHĨA KEYFRAMES ANIMATION ===== */
+        
+        /* Hiệu ứng đập + phát sáng của trái tim */
+        @keyframes pulse-glow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--primary-color)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--primary-color)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--primary-color)); }
         }
 
+        /* Hiệu ứng nhấp nháy của con trỏ */
         @keyframes blink-cursor { 50% { opacity: 0; } }
 
+        /* Hiệu ứng bong bóng bay */
         @keyframes bubble-rise {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
+            10% { opacity: 0.8; }
             90% { opacity: 0.3; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
@@ -160,19 +166,20 @@
     <div id="bubble-background"></div>
 
     <div id="result-part">
+        
         <svg id="heart-svg" viewBox="0 0 32 29.6">
             <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
             c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
         </svg>
-        <div>
-            <span id="typing-area"></span><span class="cursor" id="cursor"></span>
-        </div>
+
+        <div id="typing-area"></div><span class="cursor" id="cursor"></span>
     </div>
 
 <script>
+    // --- CẤU HÌNH CÂU HỎI ---
     let currentStep = 0;
     const quizData = [
-        { q: "Câu 1: Sở thích lãng mạn của bạn?", a: ["🍿 Xem phim", "☕ Café", "🚶 Đi dạo", "🏖️ Đi biển"] },
+        { q: "Câu 1: Bạn thích đi đâu nhất?", a: ["🍿 Xem phim", "☕ Café", "🚶 Đi dạo", "🏖️ Đi biển"] },
         { q: "Câu 2: Bạn thích món ăn nào nhất?", a: ["🍕 Pizza", "🍣 Sushi", "🍔 Burger", "🍜 Phở"] },
         { q: "Câu 3: Bạn sinh năm bao nhiêu?", a: ["2011", "2012", "2013", "2014"], correct: "2012" }
     ];
@@ -199,25 +206,34 @@
         });
     }
 
+    // --- HIỆU ỨNG BẤT NGỜ (KHI QUIZ XONG) ---
     function startSurprise() {
+        // Ẩn bảng câu hỏi với hiệu ứng mờ dần
         const quizDiv = document.getElementById('quiz-part');
         quizDiv.style.opacity = '0';
+        
+        // Sau 1 giây mới hiện phần tỏ tình
         setTimeout(() => {
             quizDiv.style.display = 'none';
             document.getElementById('result-part').style.display = 'flex';
-            startTyping();
+            startTyping(); // Bắt đầu gõ chữ
         }, 1000);
     }
 
-    // --- CẬP NHẬT NỘI DUNG CHỮ TẠI ĐÂY ---
+    // --- ANIMATION CHỮ ĐÁNH MÁY MƯỢT MÀ ---
     function startTyping() {
-        const text = "I Love You..."; // Nội dung rút gọn theo yêu cầu
+        const text = "Xin chào, tôi có điều muốn nói:\nI Love You...";
         let i = 0;
-        const typingSpeed = 150; 
+        const typingSpeed = 100; //ms mỗi chữ
 
         function type() {
             if (i < text.length) {
-                document.getElementById('typing-area').innerHTML += text.charAt(i);
+                // Xử lý xuống dòng cho kí tự \n
+                if(text.charAt(i) === "\n") {
+                    document.getElementById('typing-area').innerHTML += "<br>";
+                } else {
+                    document.getElementById('typing-area').innerHTML += text.charAt(i);
+                }
                 i++;
                 setTimeout(type, typingSpeed);
             }
@@ -225,23 +241,38 @@
         type();
     }
 
+    // --- HỆ THỐNG NỀN BONG BÓNG TRÁI TIM ---
     function createBackgroundEffect() {
         const background = document.getElementById('bubble-background');
-        const count = 15;
+        const count = 15; // Số lượng vật thể bay cùng lúc
+
+        // Hàm tạo vật thể
         for(let i = 0; i < count; i++) {
+            createBubbleItem(i * (100 / count));
+        }
+
+        function createBubbleItem(positionX) {
             const item = document.createElement('div');
-            item.innerHTML = Math.random() < 0.5 ? '✨' : '⭐'; // Đổi sang sao cho hợp tone Gold
+            // 70% là trái tim nhỏ, 30% là bong bóng tròn
+            const isHeart = Math.random() < 0.7;
+            
+            item.innerHTML = isHeart ? '❤️' : '💖';
             item.style.position = 'absolute';
             item.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
-            item.style.color = '#f7ef8a';
-            item.style.opacity = '0.4';
-            item.style.left = (Math.random() * 100) + 'vw';
+            item.style.color = Math.random() < 0.5 ? '#ff3366' : '#ff99aa'; // Đỏ hoặc hồng nhạt
+            item.style.opacity = '0.5';
+            item.style.userSelect = 'none';
+            item.style.left = positionX + 'vw';
             item.style.animation = `bubble-rise ${(Math.random() * 6 + 6)}s linear infinite`;
+            
+            // Random độ trễ để các vật thể ko bay cùng lúc
             item.style.animationDelay = (Math.random() * 8) + 's';
+
             background.appendChild(item);
         }
     }
 
+    // BẮT ĐẦU CHẠY
     loadQuestion();
     createBackgroundEffect();
 </script>
