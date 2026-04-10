@@ -1,280 +1,98 @@
-<!DOCTYPE html>
-<html lang="vi">
+<!DOCTYPE html><html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BẤM VÔ BẤT NGỜ</title>
-    <style>
-        /* ===== CẤU HÌNH GIAO DIỆN CHÍNH ===== */
-        :root {
-            --primary-color: #ff3366; /* Màu đỏ hồng chính */
-            --glow-color: rgba(255, 51, 102, 0.7);
-            --bg-color: #0d010c; /* Nền đen huyền bí */
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* ===== NỀN BONG BÓNG TRÁI TIM BAY ===== */
-        #bubble-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* ===== PHẦN KHU VỰC CÂU HỎI (HỘP QUIZ) ===== */
-        #quiz-part {
-            position: relative;
-            z-index: 100;
-            background: rgba(20, 0, 15, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 0 30px var(--glow-color);
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            opacity: 1;
-            transition: opacity 1s ease;
-        }
-
-        h2 {
-            font-family: 'Segoe UI', serif;
-            color: #fff;
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .btn {
-            background-color: transparent;
-            color: #fff;
-            border: 2px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px var(--glow-color);
-        }
-
-        .btn:hover {
-            background-color: var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-color);
-            transform: scale(1.05);
-        }
-
-        /* ===== PHẦN HIỆU ỨNG TỎ TÌNH ĐẸP HƠN ===== */
-        #result-part {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none; /* Chỉ hiện khi xong quiz */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-        }
-
-        /* Vẽ hình trái tim SVG rõ ràng và đẹp hơn */
-        #heart-svg {
-            width: 250px;
-            height: auto;
-            fill: var(--primary-color);
-            margin-bottom: 40px;
-            /* Animation đập pulse kết hợp phát sáng */
-            animation: pulse-glow 1.5s ease-in-out infinite;
-        }
-
-        /* Phần Typing Area được làm đẹp hơn */
-        #typing-area {
-            font-family: 'Great Vibes', cursive; /* Bạn có thể thêm link font này nếu muốn, ở đây dùng font mặc định đẹp nhất */
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #fff;
-            text-align: center;
-            min-height: 1.6em;
-            width: 80%;
-            max-width: 700px;
-            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px #fff;
-        }
-
-        /* Con trỏ typing mượt mà hơn */
-        .cursor {
-            display: inline-block;
-            width: 4px;
-            height: 40px;
-            background-color: #fff;
-            margin-left: 8px;
-            border-radius: 2px;
-            box-shadow: 0 0 10px #fff;
-            animation: blink-cursor 0.7s infinite;
-            vertical-align: middle;
-        }
-
-        /* ===== CÁC ĐỊNH NGHĨA KEYFRAMES ANIMATION ===== */
-        
-        /* Hiệu ứng đập + phát sáng của trái tim */
-        @keyframes pulse-glow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--primary-color)); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--primary-color)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--primary-color)); }
-        }
-
-        /* Hiệu ứng nhấp nháy của con trỏ */
-        @keyframes blink-cursor { 50% { opacity: 0; } }
-
-        /* Hiệu ứng bong bóng bay */
-        @keyframes bubble-rise {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
+<style>
+:root { --primary:#ff3366; --bg:#0d010c; }
+body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:#fff;font-family:Arial;overflow:hidden}
+#app{background:rgba(20,0,15,0.9);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--primary);width:90%;max-width:420px;z-index:10}
+button{margin:8px;padding:12px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px}
+.yes{background:#4CAF50;color:#fff}
+.no{background:#f44336;color:#fff;position:relative}
+canvas{position:fixed;top:0;left:0}
+</style>
 </head>
-<body>
+<body><canvas id="particle"></canvas>
 
-    <div id="quiz-part">
-        <h2 id="question-text">Câu 1: Điều bạn thích làm nhất?</h2>
-        <div class="options-grid" id="options"></div>
-    </div>
+<div id="app">
+<h2 id="q">Bắt đầu nhé 💌</h2>
+<button class="yes" onclick="next(true)">Bắt đầu</button>
+</div><script>
+// ===== QUIZ =====
+const data=[
+ {q:"Bạn có thấy tôi hay quan tâm bạn không?",correct:true},
+ {q:"Bạn có nghĩ tôi hay nhớ bạn không?",correct:true},
+ {q:"Bạn có nghĩ tôi chỉ xem bạn là bạn bình thường?",correct:false},
+ {q:"Bạn có nhận ra tôi cố gắng làm bạn vui?",correct:true},
+ {q:"Bạn có hiểu tôi thích bạn không?",correct:true}
+];
+let i=-1,score=0;
+function next(ans){
+ if(i>=0 && ans===data[i].correct) score++;
+ i++;
+ if(i>=data.length) return result();
+ document.getElementById("app").innerHTML=`
+ <h2>${data[i].q}</h2>
+ <button class="yes" onclick="next(true)">Có</button>
+ <button class="no" onmouseover="move(this)" onclick="next(false)">Không</button>`;
+}
+function move(b){
+ b.style.position='absolute';
+ b.style.left=Math.random()*80+'%';
+ b.style.top=Math.random()*80+'%';
+}
+function result(){
+ let msg="";
+ if(score===data.length) msg="Bạn hiểu mình thật rồi... 💖";
+ else if(score>=3) msg="Bạn hiểu một phần...";
+ else msg="Chưa hiểu mình rồi 😢";
 
-    <div id="bubble-background"></div>
+ document.getElementById("app").innerHTML=`
+ <h2>${msg}<br>I Love You ❤️</h2>
+ <button class="yes" onclick="final()">Đồng ý 💍</button>
+ <button class="no" onmouseover="move(this)">Từ chối</button>`;
+}
+function final(){
+ document.getElementById("app").innerHTML=`<h2>Yay 💖<br>Từ giờ bạn là của mình 😳</h2>`;
+}
 
-    <div id="result-part">
-        
-        <svg id="heart-svg" viewBox="0 0 32 29.6">
-            <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-            c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-        </svg>
+// ===== PARTICLE =====
+const canvas=document.getElementById("particle");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-        <div id="typing-area"></div><span class="cursor" id="cursor"></span>
-    </div>
+let particles=[];
+for(let i=0;i<80;i++){
+ particles.push({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*2+1,
+  dx:(Math.random()-0.5)*1,
+  dy:(Math.random()-0.5)*1
+ });
+}
 
-<script>
-    // --- CẤU HÌNH CÂU HỎI ---
-    let currentStep = 0;
-    const quizData = [
-        { q: "Câu 1: Bạn thích đi đâu nhất?", a: ["🍿 Xem phim", "☕ Café", "🚶 Đi dạo", "🏖️ Đi biển"] },
-        { q: "Câu 2: Bạn thích món ăn nào nhất?", a: ["🍕 Pizza", "🍣 Sushi", "🍔 Burger", "🍜 Phở"] },
-        { q: "Câu 3: Bạn sinh năm bao nhiêu?", a: ["2011", "2012", "2013", "2014"], correct: "2012" }
-    ];
+function draw(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="#ff3366";
+ particles.forEach(p=>{
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fill();
+  p.x+=p.dx;
+  p.y+=p.dy;
+  if(p.x<0||p.x>canvas.width) p.dx*=-1;
+  if(p.y<0||p.y>canvas.height) p.dy*=-1;
+ });
+ requestAnimationFrame(draw);
+}
+draw();
 
-    function loadQuestion() {
-        const data = quizData[currentStep];
-        document.getElementById('question-text').innerText = data.q;
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        data.a.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'btn';
-            btn.innerText = opt;
-            btn.onclick = () => {
-                if(currentStep === 2 && opt !== data.correct) {
-                    alert("Ơ kìa, chọn lại cho đúng định mệnh đi chứ! 😉");
-                } else {
-                    currentStep++;
-                    if(currentStep < quizData.length) loadQuestion();
-                    else startSurprise();
-                }
-            };
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    // --- HIỆU ỨNG BẤT NGỜ (KHI QUIZ XONG) ---
-    function startSurprise() {
-        // Ẩn bảng câu hỏi với hiệu ứng mờ dần
-        const quizDiv = document.getElementById('quiz-part');
-        quizDiv.style.opacity = '0';
-        
-        // Sau 1 giây mới hiện phần tỏ tình
-        setTimeout(() => {
-            quizDiv.style.display = 'none';
-            document.getElementById('result-part').style.display = 'flex';
-            startTyping(); // Bắt đầu gõ chữ
-        }, 1000);
-    }
-
-    // --- ANIMATION CHỮ ĐÁNH MÁY MƯỢT MÀ ---
-    function startTyping() {
-        const text = "Xin chào, tôi có điều muốn nói:\nI Love You...";
-        let i = 0;
-        const typingSpeed = 100; //ms mỗi chữ
-
-        function type() {
-            if (i < text.length) {
-                // Xử lý xuống dòng cho kí tự \n
-                if(text.charAt(i) === "\n") {
-                    document.getElementById('typing-area').innerHTML += "<br>";
-                } else {
-                    document.getElementById('typing-area').innerHTML += text.charAt(i);
-                }
-                i++;
-                setTimeout(type, typingSpeed);
-            }
-        }
-        type();
-    }
-
-    // --- HỆ THỐNG NỀN BONG BÓNG TRÁI TIM ---
-    function createBackgroundEffect() {
-        const background = document.getElementById('bubble-background');
-        const count = 15; // Số lượng vật thể bay cùng lúc
-
-        // Hàm tạo vật thể
-        for(let i = 0; i < count; i++) {
-            createBubbleItem(i * (100 / count));
-        }
-
-        function createBubbleItem(positionX) {
-            const item = document.createElement('div');
-            // 70% là trái tim nhỏ, 30% là bong bóng tròn
-            const isHeart = Math.random() < 0.7;
-            
-            item.innerHTML = isHeart ? '❤️' : '💖';
-            item.style.position = 'absolute';
-            item.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
-            item.style.color = Math.random() < 0.5 ? '#ff3366' : '#ff99aa'; // Đỏ hoặc hồng nhạt
-            item.style.opacity = '0.5';
-            item.style.userSelect = 'none';
-            item.style.left = positionX + 'vw';
-            item.style.animation = `bubble-rise ${(Math.random() * 6 + 6)}s linear infinite`;
-            
-            // Random độ trễ để các vật thể ko bay cùng lúc
-            item.style.animationDelay = (Math.random() * 8) + 's';
-
-            background.appendChild(item);
-        }
-    }
-
-    // BẮT ĐẦU CHẠY
-    loadQuestion();
-    createBackgroundEffect();
-</script>
-</body>
+window.onresize=()=>{
+ canvas.width=innerWidth;
+ canvas.height=innerHeight;
+}
+</script></body>
 </html>
