@@ -2,63 +2,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+<title>BẤM VÔ BẤT NGỜ 💖</title>
 <style>
-:root { --primary:#ff3366; --bg:#0d010c; }
+:root{--primary:#ff3366;--bg:#0d010c}
 body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:#fff;font-family:Arial;overflow:hidden}
-#app{background:rgba(20,0,15,0.9);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--primary);width:90%;max-width:420px;z-index:10;animation:fadeIn 1s ease}
-button{margin:8px;padding:12px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;transition:0.3s}
-.yes{background:#4CAF50;color:#fff}
-.no{background:#f44336;color:#fff}
-button:hover{transform:scale(1.1);box-shadow:0 0 10px var(--primary)}
+#app{background:rgba(20,0,15,0.9);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--primary);width:90%;max-width:420px;z-index:10;animation:fadeIn 1s}
+button{margin:8px;padding:12px;border:none;border-radius:10px;cursor:pointer;font-size:14px;width:45%}
+.btn{background:transparent;border:2px solid var(--primary);color:#fff}
+.btn:hover{background:var(--primary);transform:scale(1.05)}
 canvas{position:fixed;top:0;left:0}
-#typing{font-size:22px;margin-top:15px;min-height:40px}
-.heart{font-size:60px;animation:pulse 1s infinite}@keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} } @keyframes fadeIn{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} } </style>
-
+#typing{margin-top:15px;font-size:20px;min-height:40px}
+.heart{font-size:60px;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
 </head>
 <body><canvas id="particle"></canvas>
 
 <div id="app">
 <h2>Bắt đầu nhé 💌</h2>
-<button class="yes" onclick="next(true)">Bắt đầu</button>
+<button class="btn" onclick="next()">Bắt đầu</button>
 </div><script>
-// ===== QUIZ =====
+// ===== QUIZ 10 CÂU ABCD =====
 const data=[
- {q:"Bạn có thấy tôi hay quan tâm bạn không?",correct:true},
- {q:"Bạn có nghĩ tôi hay nhớ bạn không?",correct:true},
- {q:"Bạn có nghĩ tôi chỉ xem bạn là bạn bình thường?",correct:false},
- {q:"Bạn có nhận ra tôi cố gắng làm bạn vui?",correct:true},
- {q:"Bạn có hiểu tôi thích bạn không?",correct:true}
+{q:"Bạn thích đi đâu nhất?",a:["Xem phim","Cafe","Đi dạo","Đi biển"]},
+{q:"Bạn thích ăn gì nhất?",a:["Pizza","Sushi","Burger","Phở"]},
+{q:"Bạn thích làm gì khi rảnh?",a:["Ngủ","Chơi game","Nghe nhạc","Đi chơi"]},
+{q:"Bạn nghĩ tôi là người thế nào?",a:["Vui tính","Lạnh lùng","Khó hiểu","Quan tâm"]},
+{q:"Bạn có thấy tôi quan tâm bạn không?",a:["Có","Không","Ít","Không để ý"]},
+{q:"Bạn có hay nghĩ về tôi không?",a:["Rất nhiều","Thỉnh thoảng","Hiếm","Không"]},
+{q:"Bạn thích nói chuyện với tôi không?",a:["Rất thích","Bình thường","Ít","Không"]},
+{q:"Bạn thấy tôi khác người khác không?",a:["Có","Không","Chút","Không biết"]},
+{q:"Bạn có đoán được tôi thích ai không?",a:["Có","Không","Có thể","Không chắc"]},
+{q:"Bạn có hiểu tình cảm của tôi không?",a:["Có","Không","Mơ hồ","Không biết"]}
 ];
-let i=-1,score=0;
-function next(ans){
- if(i>=0 && ans===data[i].correct) score++;
- i++;
+
+let i=0;
+function next(){
  if(i>=data.length) return result();
+ let q=data[i];
  document.getElementById("app").innerHTML=`
- <h2>${data[i].q}</h2>
- <button class="yes" onclick="next(true)">Có</button>
- <button class="no" onclick="next(false)">Không</button>`;
+ <h2>${q.q}</h2>
+ ${q.a.map(x=>`<button class="btn" onclick="choose()">${x}</button>`).join("")}
+ `;
 }
 
+function choose(){
+ i++;
+ next();
+}
+
+// ===== RESULT + TYPING =====
 function result(){
  document.getElementById("app").innerHTML=`
  <div class="heart">❤️</div>
  <div id="typing"></div>
  <br>
- <button class="yes" onclick="final()">Đồng ý 💍</button>
- <button class="no" onclick="reject()">Từ chối</button>`;
+ <button class="btn" onclick="final()">Đồng ý 💍</button>
+ <button class="btn" onclick="reject()">Từ chối</button>`;
  startTyping();
 }
 
 function startTyping(){
  const text="Tôi thích bạn... Làm người yêu tôi nhé 💖";
- let i=0;
+ let j=0;
  function type(){
-  if(i<text.length){
-    document.getElementById("typing").innerHTML+=text.charAt(i);
-    i++;
-    setTimeout(type,60);
+  if(j<text.length){
+    document.getElementById("typing").innerHTML+=text[j];
+    j++;
+    setTimeout(type,50);
   }
  }
  type();
@@ -80,34 +92,22 @@ canvas.height=innerHeight;
 
 let particles=[];
 for(let i=0;i<100;i++){
- particles.push({
-  x:Math.random()*canvas.width,
-  y:Math.random()*canvas.height,
-  r:Math.random()*2+1,
-  dx:(Math.random()-0.5)*1.5,
-  dy:(Math.random()-0.5)*1.5
- });
+ particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*1.5,dy:(Math.random()-0.5)*1.5});
 }
 
 function draw(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  ctx.fillStyle="#ff3366";
  particles.forEach(p=>{
-  ctx.beginPath();
-  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-  ctx.fill();
-  p.x+=p.dx;
-  p.y+=p.dy;
-  if(p.x<0||p.x>canvas.width) p.dx*=-1;
-  if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  p.x+=p.dx;p.y+=p.dy;
+  if(p.x<0||p.x>canvas.width)p.dx*=-1;
+  if(p.y<0||p.y>canvas.height)p.dy*=-1;
  });
  requestAnimationFrame(draw);
 }
 draw();
 
-window.onresize=()=>{
- canvas.width=innerWidth;
- canvas.height=innerHeight;
-}
+window.onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight}
 </script></body>
 </html>
