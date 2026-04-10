@@ -6,17 +6,20 @@
 <style>
 :root { --primary:#ff3366; --bg:#0d010c; }
 body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:#fff;font-family:Arial;overflow:hidden}
-#app{background:rgba(20,0,15,0.9);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--primary);width:90%;max-width:420px;z-index:10}
-button{margin:8px;padding:12px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px}
+#app{background:rgba(20,0,15,0.9);padding:25px;border-radius:20px;text-align:center;box-shadow:0 0 20px var(--primary);width:90%;max-width:420px;z-index:10;animation:fadeIn 1s ease}
+button{margin:8px;padding:12px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;transition:0.3s}
 .yes{background:#4CAF50;color:#fff}
-.no{background:#f44336;color:#fff;position:relative}
+.no{background:#f44336;color:#fff}
+button:hover{transform:scale(1.1);box-shadow:0 0 10px var(--primary)}
 canvas{position:fixed;top:0;left:0}
-</style>
+#typing{font-size:22px;margin-top:15px;min-height:40px}
+.heart{font-size:60px;animation:pulse 1s infinite}@keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} } @keyframes fadeIn{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} } </style>
+
 </head>
 <body><canvas id="particle"></canvas>
 
 <div id="app">
-<h2 id="q">Bắt đầu nhé 💌</h2>
+<h2>Bắt đầu nhé 💌</h2>
 <button class="yes" onclick="next(true)">Bắt đầu</button>
 </div><script>
 // ===== QUIZ =====
@@ -35,26 +38,38 @@ function next(ans){
  document.getElementById("app").innerHTML=`
  <h2>${data[i].q}</h2>
  <button class="yes" onclick="next(true)">Có</button>
- <button class="no" onmouseover="move(this)" onclick="next(false)">Không</button>`;
+ <button class="no" onclick="next(false)">Không</button>`;
 }
-function move(b){
- b.style.position='absolute';
- b.style.left=Math.random()*80+'%';
- b.style.top=Math.random()*80+'%';
-}
-function result(){
- let msg="";
- if(score===data.length) msg="Bạn hiểu mình thật rồi... 💖";
- else if(score>=3) msg="Bạn hiểu một phần...";
- else msg="Chưa hiểu mình rồi 😢";
 
+function result(){
  document.getElementById("app").innerHTML=`
- <h2>${msg}<br>I Love You ❤️</h2>
+ <div class="heart">❤️</div>
+ <div id="typing"></div>
+ <br>
  <button class="yes" onclick="final()">Đồng ý 💍</button>
- <button class="no" onmouseover="move(this)">Từ chối</button>`;
+ <button class="no" onclick="reject()">Từ chối</button>`;
+ startTyping();
 }
+
+function startTyping(){
+ const text="Tôi thích bạn... Làm người yêu tôi nhé 💖";
+ let i=0;
+ function type(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(type,60);
+  }
+ }
+ type();
+}
+
 function final(){
- document.getElementById("app").innerHTML=`<h2>Yay 💖<br>Từ giờ bạn là của mình 😳</h2>`;
+ document.getElementById("app").innerHTML=`<h2 class="heart">Yay 💖</h2>`;
+}
+
+function reject(){
+ document.getElementById("app").innerHTML=`<h2>😢 Nhưng tôi vẫn thích bạn...</h2>`;
 }
 
 // ===== PARTICLE =====
@@ -64,13 +79,13 @@ canvas.width=innerWidth;
 canvas.height=innerHeight;
 
 let particles=[];
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
  particles.push({
   x:Math.random()*canvas.width,
   y:Math.random()*canvas.height,
   r:Math.random()*2+1,
-  dx:(Math.random()-0.5)*1,
-  dy:(Math.random()-0.5)*1
+  dx:(Math.random()-0.5)*1.5,
+  dy:(Math.random()-0.5)*1.5
  });
 }
 
