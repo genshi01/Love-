@@ -28,13 +28,13 @@ const data=[
 {q:"Bạn thích đi đâu nhất?",a:["Xem phim","Cafe","Đi dạo","Đi biển"]},
 {q:"Bạn thích ăn gì nhất?",a:["Pizza","Sushi","Burger","Phở"]},
 {q:"Bạn thích làm gì khi rảnh?",a:["Ngủ","Chơi game","Nghe nhạc","Đi chơi"]},
-{q:"Bạn nghĩ tôi là người thế nào?",a:["Vui tính","Lạnh lùng","Khó hiểu","Quan tâm"]},
-{q:"Bạn có thấy tôi quan tâm bạn không?",a:["Có","Không","Ít","Không để ý"]},
-{q:"Bạn có hay nghĩ về tôi không?",a:["Rất nhiều","Thỉnh thoảng","Hiếm","Không"]},
-{q:"Bạn thích nói chuyện với tôi không?",a:["Rất thích","Bình thường","Ít","Không"]},
-{q:"Bạn thấy tôi khác người khác không?",a:["Có","Không","Chút","Không biết"]},
-{q:"Bạn có đoán được tôi thích ai không?",a:["Có","Không","Có thể","Không chắc"]},
-{q:"Bạn có hiểu tình cảm của tôi không?",a:["Có","Không","Mơ hồ","Không biết"]}
+{q:"Bạn nghĩ mình là người thế nào?",a:["Vui tính","Lạnh lùng","Khó hiểu","Quan tâm"]},
+{q:"Bạn có thấy mình quan tâm bạn không?",a:["Có","Không","Ít","Không để ý"]},
+{q:"Bạn có hay nghĩ về mình không?",a:["Rất nhiều","Thỉnh thoảng","Hiếm","Không"]},
+{q:"Bạn thích nói chuyện với mình không?",a:["Rất thích","Bình thường","Ít","Không"]},
+{q:"Bạn thấy mình khác người khác không?",a:["Có","Không","Chút","Không biết"]},
+{q:"Bạn có đoán được mình thích ai không?",a:["Có","Không","Có thể","Không chắc"]},
+{q:"Bạn có hiểu tình cảm của mình không?",a:["Có","Không","Mơ hồ","Không biết"]}
 ];
 
 let i=0;
@@ -64,7 +64,7 @@ function result(){
 }
 
 function startTyping(){
- const text="Tôi thích bạn... Làm người yêu tôi nhé 💖";
+ const text="Mình thích bạn... Làm người yêu mình nhé 💖";
  let j=0;
  function type(){
   if(j<text.length){
@@ -77,11 +77,23 @@ function startTyping(){
 }
 
 function final(){
- document.getElementById("app").innerHTML=`<h2 class="heart">Yay 💖</h2>`;
+ document.getElementById("app").innerHTML=`
+ <div class="heart" style="font-size:120px;color:#ff0000;animation:bigHeart 1s infinite">❤️</div>
+ <h2>Bạn đã thuộc về mình rồi 💖</h2>`;
 }
 
+// animation tim lớn hơn
+const style2=document.createElement('style');
+style2.innerHTML=`
+@keyframes bigHeart{
+0%{transform:scale(1)}
+50%{transform:scale(1.4)}
+100%{transform:scale(1)}
+}`;
+document.head.appendChild(style2);
+
 function reject(){
- document.getElementById("app").innerHTML=`<h2>😢 Nhưng tôi vẫn thích bạn...</h2>`;
+ document.getElementById("app").innerHTML=`<h2>😢 Nhưng mình vẫn thích bạn...</h2>`;
 }
 
 // ===== PARTICLE =====
